@@ -6,7 +6,21 @@ export const GET = async (request) => {
   const prisma = getPrisma();
 
   //Modify following line so that it find course with "searchText" variable
-  const courses = await prisma.course.findMany({});
+  //   001101 - FUNDAMENTAL ENGLISH 1
+  // 001102 - FUNDAMENTAL ENGLISH 2
+  // 001103 - FUNDAMENTAL ENGLISH 3
+  // 261207 - BASIC COMP ENGR LAB
+  const courses = await prisma.course.findMany({
+    where: {
+      title: {
+        contains: searchText,
+        mode: "insensitive",
+      },
+    },
+    orderBy: {
+      courseNo: "asc",
+    },
+  });
 
   return NextResponse.json({ ok: true, courses });
 };
